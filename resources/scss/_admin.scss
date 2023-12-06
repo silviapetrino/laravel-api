@@ -1,0 +1,59 @@
+header {
+    height: 60px;
+    .links a {
+        color: white;
+        padding: 10px;
+
+        &:hover {
+            background-color: rgba($color: rgb(245, 235, 235), $alpha: .8);
+            color:black;
+
+            border-radius: 5px;
+        }
+    }
+}
+
+.main-wrapper{
+    height: calc(100vh - 60px);
+    background-image: url('../../public/gradient-abstract-wireframe-background_23-2149009903.avif');
+    background-size: cover;
+}
+
+aside {
+    width: 200px;
+    height: 100%;
+
+        ul {
+            list-style: none;
+            li {
+                padding-bottom: 20px;
+                a {
+                    color: white;
+                    text-decoration: none;
+                    padding: 10px;
+
+                    &:hover {
+                        background-color: rgba($color: rgb(245, 235, 235), $alpha: .8);
+                        color:black;
+
+                        border-radius: 5px;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    // select in create-edit page
+
+    .select.type {
+        width: 150px;
+    }
+
+    // types table
+
+    table.types {
+        width: 500px;
+        border-collapse: collapse;
+    }
