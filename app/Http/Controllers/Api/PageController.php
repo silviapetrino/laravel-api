@@ -17,7 +17,9 @@ class PageController extends Controller
 
         // query che mi prende il project con lo slug passato con first(),  se mettessimo get() ci restituisce un array
         $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
-        return response()->json($project);
+        if($project) $success = true;
+        else $success = false;
+        return response()->json(compact('project', 'success'));
 
     }
 
