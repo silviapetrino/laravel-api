@@ -13,5 +13,14 @@ class PageController extends Controller
         return response()->json($projects);
     }
 
+    public function getProjectBySlug($slug){
+
+        // query che mi prende il project con lo slug passato con first(),  se mettessimo get() ci restituisce un array
+        $project = Project::where('slug', $slug)->with('type', 'technologies')->first();
+        return response()->json($project);
+
+    }
+
+
 }
 
