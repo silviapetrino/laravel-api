@@ -14,7 +14,7 @@ class Type extends Model
     protected $fillable = [
         'name'
     ];
-
+// ogni tipo ha tanti progetti 
     public function projects(){
         return $this->hasMany(Project::class);
     }

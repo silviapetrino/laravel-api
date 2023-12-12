@@ -12,20 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->unsignedBigInteger('type_id')->after('id')->nullable();
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
+            $table->string('image')->after('title')->nullable();
+            $table->string('image_original_name')->after('image')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    // nel down si deve droppare la key e la colonna 
     public function down(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign((['type_id']));
-            $table->dropColumn('type_id');
+            $table->dropColumn('image');
+            $table->dropColumn('image_original_name');
         });
     }
 };
