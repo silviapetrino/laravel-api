@@ -68,10 +68,12 @@
             <div class="mb-3">
                 <label for="image" class="form-label">Image: </label>
 
-                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $project?->image)}}">
+                <input onchange="showImage(event)" type="file" class="mb-1 form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $project?->image)}}">
                 @error('image')
-                {{-- <p class="text-danger fw-bold">{{ $image }}</p> --}}
+                <p class="text-danger fw-bold">{{ $image }}</p>
                 @enderror
+                 {{-- in caso di errore del caricamento dell'immagine carico il placeholder  --}}
+                 <img class="rounded" id="thumb" width="150" onerror="this.src='/img/placeholder.png'"  src="{{ asset('storage/' . $project?->image) }}" />
 
             </div>
 
@@ -106,6 +108,12 @@
         .catch( error => {
             console.error( error );
         } );
+
+
+        function showImage(event){
+            const thumb = document.getElementById('img');
+            thumb.src = URL.createObjectURL(event.target.files[0]);
+        }
 </script>
 
 
