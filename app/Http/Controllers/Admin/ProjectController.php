@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Type;
 use App\Models\Technology;
+
 
 class ProjectController extends Controller
 {
@@ -24,7 +26,7 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -54,9 +56,19 @@ class ProjectController extends Controller
         $new_project = new Project();
         $new_project->fill($data);
         $new_project->slug = Project::generateSlug($request->title, '-');
+         // se esiste la chiave image salvo l'immagine nel file system e nel database
+         if(array_key_exists('image', $data)) {
+
+            // prima di salvare il file prendo il nome del file per salvarlo nel db
+            $data['image_original_name'] = $request->file('image')->getClientOriginalName();
+            // salvo il file nello storage rinominandolo
+            $data['image'] = Storage::put('uploads', $data['image']);
+
+        }
 
 
         $new_project->save();
+        
         if(array_key_exists('technologies', $data)){
             $new_project->technologies()->attach($data['technologies']);
         }

@@ -6,7 +6,7 @@
 {{--  creating a new project or editing an existing one --}}
 
 <div class="container py-5">
-    <form action="{{ $route }}" method="POST" class="text-white">
+    <form action="{{ $route }}" method="POST" class="text-white" enctype="multipart/form-data" >
         @csrf
         @method($method)
         <h2>{{ $title }}</h2>
@@ -64,6 +64,15 @@
                     <label class="btn btn-outline-primary" for="technology_{{$technology->id}}"">{{ $technology->name }}</label>
                 @endforeach
             </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Image: </label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $project?->image)}}">
+                @error('image')
+                <p class="text-danger fw-bold">{{ $image }}</p>
+                @enderror
+            </div>
+
 
 
             <div class="mb-3">

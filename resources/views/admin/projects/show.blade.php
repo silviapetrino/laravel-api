@@ -13,6 +13,9 @@
             <div class="card"></div>
                 <div class="card-body">
                 <h5 class="card-title">{{ $project->title}}</h5>
+                {{-- img  --}}
+                <img src="{{ asset('storage/' . $project->image)}}" alt="{{ $project->title}}">
+                <p>{{ $project->image_original_name }}</p>
                   {{-- print type if exists --}}
                 @if ($project->type)
                     <p class="card-text"><span><strong>Type: </strong></span>{{ $project->type?->name }}</p>
