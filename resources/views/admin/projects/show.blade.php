@@ -16,9 +16,9 @@
                 {{-- img  --}}
 
                 <div class="w-50">
-                    <img class="img-fluid" src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
-                   
-                    <p>{{ $project->image_original_name }}</p>
+                    <img class="img-fluid" src="{{ asset('storage/' . $project->image) }}" >
+
+                    {{-- <p>{{ $project->image_original_name }}</p> --}}
                 </div>
                   {{-- print type if exists --}}
                 @if ($project->type)

@@ -54,18 +54,19 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         $new_project = new Project();
-        $new_project->fill($data);
+
         $new_project->slug = Project::generateSlug($request->title, '-');
         // se esiste la chiave image salvo l'immagine nel file system e nel database
+
         if(array_key_exists('image', $data)) {
 
-            // prima di salvare il file prendo il nome del file per salvarlo nel db
+            // prima di salvare il file prendo il nome del file per salvarlo nel d
             $data['image_original_name'] = $request->file('image')->getClientOriginalName();
-            // salvo il file nello storage rinominandolo
             $data['image'] = Storage::put('uploads', $data['image']);
 
-        }
 
+        }
+        $new_project->fill($data);
 
         $new_project->save();
 
@@ -152,7 +153,7 @@ class ProjectController extends Controller
         if($project->image){
             Storage::disk('public')->delete($project->image);
         }
-        
+
         $route = route('admin.projects.destroy', $project);
         $project->delete();
         return redirect()->route('admin.projects.index')->with('success', 'the project was successfully deleted');
