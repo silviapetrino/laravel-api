@@ -56,8 +56,8 @@ class ProjectController extends Controller
         $new_project = new Project();
         $new_project->fill($data);
         $new_project->slug = Project::generateSlug($request->title, '-');
-         // se esiste la chiave image salvo l'immagine nel file system e nel database
-         if(array_key_exists('image', $data)) {
+        // se esiste la chiave image salvo l'immagine nel file system e nel database
+        if(array_key_exists('image', $data)) {
 
             // prima di salvare il file prendo il nome del file per salvarlo nel db
             $data['image_original_name'] = $request->file('image')->getClientOriginalName();
@@ -68,7 +68,7 @@ class ProjectController extends Controller
 
 
         $new_project->save();
-        
+
         if(array_key_exists('technologies', $data)){
             $new_project->technologies()->attach($data['technologies']);
         }
@@ -118,6 +118,16 @@ class ProjectController extends Controller
                 $data['slug'] = Str::slug($request->title, '-');
             }else{
                 $data['slug'] = $project->slug;
+            }
+
+            if(array_key_exists('image', $data)){
+                if($project->image){
+                    Storage::disk('public')->delete($project->image);
+                }
+
+                $data['image_original_name'] = $request->file('image')->getClientOriginalName();
+
+                $data['image'] = Storage::put('uploads', $data['image']);
             }
 
         $project->update($data);
