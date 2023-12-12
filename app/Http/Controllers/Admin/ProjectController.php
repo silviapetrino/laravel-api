@@ -112,7 +112,7 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
      {
-        $data = $request->all();
+            $data = $request->all();
 
             if($data['title'] != $project->title){
                 $data['slug'] = Str::slug($request->title, '-');
@@ -149,6 +149,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if($project->image){
+            Storage::disk('public')->delete($project->image);
+        }
+        
         $route = route('admin.projects.destroy', $project);
         $project->delete();
         return redirect()->route('admin.projects.index')->with('success', 'the project was successfully deleted');
