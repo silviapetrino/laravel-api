@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Lead;
+use App\Mail\NewContact;
 
 class LeadController extends Controller
 {
@@ -12,7 +15,8 @@ class LeadController extends Controller
         // saving request
         $data = $request->all();
 
-        $validator = Validator::make($data, [
+        $validator = Validator::make($data,
+        [
             'name' => 'required|min:2|max:255',
             'email' => 'required|min:2|max:255',
             'message' => 'required|min:2',
@@ -35,7 +39,17 @@ class LeadController extends Controller
             return response()->json(compact('success', 'errors'));
         }
 
-        // If there are no errors, returning success=true. I save the data in the database and send the email
+        // Saving data in the database
+
+            $new_lead = new Lead();
+            $new_lead->fill($data);
+            $new_lead->save();
+
+        // sending the email
+
+            Mail::to('petrino.silvia@gmail.com')->send(new NewContact($new_lead));
+
+        // If there are no errors, returning success=true.
 
             $success = true;
             return response()->json(compact('success'));
