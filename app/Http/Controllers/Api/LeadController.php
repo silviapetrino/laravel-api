@@ -20,7 +20,8 @@ class LeadController extends Controller
             'name' => 'required|min:2|max:255',
             'email' => 'required|min:2|max:255',
             'message' => 'required|min:2',
-        ], [
+        ],
+        [
             'name.required' => 'The name field is required.',
             'name.min' => 'The name must be at least :min characters.',
             'name.max' => 'The name may not be greater than :max characters.',
